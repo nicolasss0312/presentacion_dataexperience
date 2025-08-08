@@ -163,6 +163,51 @@
             opacity: 1;
             padding-top: 1rem;
         }
+        .helper-icon {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.5);
+            color: white;
+            font-weight: bold;
+            cursor: help;
+            transition: all 0.3s ease;
+        }
+        .helper-icon:hover {
+            background-color: #3B82F6;
+            transform: scale(1.1);
+        }
+        .helper-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background: rgba(40, 50, 70, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #F0F6FC;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            text-align: left;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .helper-icon:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -218,7 +263,10 @@
     <div id="slide-4" class="slide">
         <div class="slide-content w-full text-center">
             <h2 class="section-title text-blue-300 animated-item">Perfil Demográfico</h2>
-            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Preguntas Sociodemográficas</p>
+            <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Preguntas Sociodemográficas</p>
+                <div class="helper-icon" data-tooltip="Recopilan información sobre las características de la población (edad, género, etc.) para describir quiénes son los encuestados.">?</div>
+            </div>
             <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl animated-item" style="animation-delay: 0.4s;">
                 <div class="chart-container glass-card h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Género</h3>
@@ -246,7 +294,10 @@
     <div id="slide-5" class="slide">
         <div class="slide-content w-full text-center max-w-4xl">
             <h2 class="section-title text-teal-300 animated-item">Horas de estudio fuera del aula</h2>
-             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+            <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
+                <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
+            </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q1Chart"></canvas>
@@ -259,7 +310,10 @@
     <div id="slide-6" class="slide">
         <div class="slide-content w-full text-center max-w-4xl">
             <h2 class="section-title text-teal-300 animated-item">Uso diario de redes sociales y streaming</h2>
-             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+             <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
+                <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
+            </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q2Chart"></canvas>
@@ -272,7 +326,10 @@
     <div id="slide-7" class="slide">
         <div class="slide-content w-full text-center max-w-4xl">
             <h2 class="section-title text-teal-300 animated-item">Tiempo semanal de actividad física</h2>
-             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+             <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
+                <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
+            </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q3Chart"></canvas>
@@ -285,7 +342,10 @@
     <div id="slide-8" class="slide">
         <div class="slide-content w-full text-center max-w-4xl">
             <h2 class="section-title text-blue-300 animated-item">¿Qué te impide aprovechar tu tiempo libre?</h2>
-            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Diagnóstica</p>
+            <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Pregunta Diagnóstica</p>
+                <div class="helper-icon" data-tooltip="Intentan entender las causas, razones o barreras detrás de un comportamiento. Responden al 'porqué'.">?</div>
+            </div>
             <div class="chart-container glass-card mx-auto h-96 animated-item" style="animation-delay: 0.4s;">
                 <div class="chart-wrapper">
                     <canvas id="q4Chart"></canvas>
@@ -298,7 +358,10 @@
     <div id="slide-9" class="slide">
         <div class="slide-content w-full text-center max-w-4xl">
             <h2 class="section-title text-blue-300 animated-item">¿Cómo describes tu experiencia con el tiempo libre?</h2>
-            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Diagnóstica</p>
+            <div class="flex items-center justify-center gap-2 animated-item" style="animation-delay: 0.2s;">
+                <p class="inline-block mt-2 tag">Pregunta Diagnóstica</p>
+                <div class="helper-icon" data-tooltip="Intentan entender las causas, razones o barreras detrás de un comportamiento. Responden al 'porqué'.">?</div>
+            </div>
             <div class="chart-container glass-card mx-auto h-96 animated-item" style="animation-delay: 0.4s;">
                 <div class="chart-wrapper">
                     <canvas id="q5Chart"></canvas>
