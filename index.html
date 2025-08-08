@@ -208,6 +208,37 @@
             opacity: 1;
             visibility: visible;
         }
+
+        /* Estilos para Mobile */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 1rem;
+            }
+            .main-title {
+                font-size: 2.75rem;
+                line-height: 1.2;
+            }
+            .section-title {
+                font-size: 2.25rem;
+                line-height: 1.2;
+            }
+            .nav-button {
+                padding: 0.6rem 1.2rem;
+                bottom: 1rem;
+            }
+            #prevBtn { left: 1rem; }
+            #nextBtn { right: 1rem; }
+            #slideCounter {
+                bottom: 1.5rem;
+            }
+            .chart-container {
+                padding: 1rem;
+            }
+            .helper-icon::after {
+                width: 220px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -229,12 +260,12 @@
     <div id="slide-2" class="slide">
         <div class="slide-content text-center max-w-4xl">
             <h2 class="section-title text-blue-300 animated-item">La Problemática</h2>
-            <div class="mt-6 p-8 glass-card animated-item">
+            <div class="mt-6 p-6 md:p-8 glass-card animated-item">
                 <p class="text-lg md:text-xl text-gray-200 leading-relaxed">
                     Los adolescentes y jóvenes universitarios destinan gran parte de su tiempo libre a actividades de ocio que, aunque entretenidas,
                     <span class="text-white font-semibold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-orange-400">no siempre fomentan habilidades cruciales</span> para su desarrollo académico o personal.
                 </p>
-                <p class="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed">
+                <p class="mt-4 text-md md:text-xl text-gray-300 leading-relaxed">
                     Esta situación puede limitar su crecimiento, afectar su bienestar emocional y su equilibrio general.
                 </p>
             </div>
@@ -267,20 +298,20 @@
                 <p class="inline-block mt-2 tag">Preguntas Sociodemográficas</p>
                 <div class="helper-icon" data-tooltip="Recopilan información sobre las características de la población (edad, género, etc.) para describir quiénes son los encuestados.">?</div>
             </div>
-            <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl animated-item" style="animation-delay: 0.4s;">
-                <div class="chart-container glass-card h-96">
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8 w-full max-w-7xl animated-item" style="animation-delay: 0.4s;">
+                <div class="chart-container glass-card h-80 md:h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Género</h3>
                     <div class="chart-wrapper">
                         <canvas id="genderChart"></canvas>
                     </div>
                 </div>
-                <div class="chart-container glass-card h-96">
+                <div class="chart-container glass-card h-80 md:h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Edad de los Encuestados</h3>
                     <div class="chart-wrapper">
                         <canvas id="ageChart"></canvas>
                     </div>
                 </div>
-                <div class="chart-container glass-card h-96">
+                <div class="chart-container glass-card h-80 md:h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Nivel Educativo</h3>
                     <div class="chart-wrapper">
                         <canvas id="educationChart"></canvas>
@@ -299,7 +330,7 @@
                 <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
             </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
-                 <div class="chart-wrapper" style="height: 400px">
+                 <div class="chart-wrapper" style="height: 350px;">
                     <canvas id="q1Chart"></canvas>
                 </div>
             </div>
@@ -315,7 +346,7 @@
                 <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
             </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
-                 <div class="chart-wrapper" style="height: 400px">
+                 <div class="chart-wrapper" style="height: 350px;">
                     <canvas id="q2Chart"></canvas>
                 </div>
             </div>
@@ -331,7 +362,7 @@
                 <div class="helper-icon" data-tooltip="Buscan medir una situación o comportamiento. Responden al 'qué', 'cuánto' o 'con qué frecuencia'.">?</div>
             </div>
             <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
-                 <div class="chart-wrapper" style="height: 400px">
+                 <div class="chart-wrapper" style="height: 350px;">
                     <canvas id="q3Chart"></canvas>
                 </div>
             </div>
@@ -476,9 +507,10 @@
         });
 
         // --- Configuración del fondo de partículas ---
+        const isMobile = window.innerWidth <= 768;
         particlesJS('particles-js', {
             "particles": {
-                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "number": { "value": isMobile ? 25 : 60, "density": { "enable": true, "value_area": 800 } },
                 "color": { "value": "#4A5568" },
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.5, "random": true },
@@ -488,7 +520,7 @@
             },
             "interactivity": {
                 "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "events": { "onhover": { "enable": !isMobile, "mode": "grab" }, "onclick": { "enable": !isMobile, "mode": "push" }, "resize": true },
                 "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
             },
             "retina_detect": true
@@ -522,7 +554,7 @@
                     color: '#F0F6FC',
                     anchor: 'end',
                     align: 'top',
-                    font: { weight: 'bold', size: 14 },
+                    font: { weight: 'bold', size: isMobile ? 10 : 14 },
                     textShadow: { color: 'rgba(0,0,0,0.7)', blur: 5, offsetX: 1, offsetY: 1 }
                 }
             },
@@ -544,14 +576,14 @@
              maintainAspectRatio: false,
              plugins: {
                 legend: {
-                    position: 'right',
-                    labels: { color: '#D1D5DB', font: { size: 14 } }
+                    position: isMobile ? 'bottom' : 'right',
+                    labels: { color: '#D1D5DB', font: { size: isMobile ? 12 : 14 } }
                 },
                 datalabels: {
                     formatter: percentageFormatter,
                     color: '#FFF',
                     textShadow: { color: 'rgba(0,0,0,0.7)', blur: 5, offsetX: 1, offsetY: 1 },
-                    font: { weight: 'bold', size: 14 }
+                    font: { weight: 'bold', size: isMobile ? 12 : 14 }
                 }
             },
         }
