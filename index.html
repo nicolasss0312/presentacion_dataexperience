@@ -121,8 +121,6 @@
         }
         .chart-container {
             width: 100%;
-            max-width: 600px;
-            margin-top: 2rem;
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
@@ -152,6 +150,18 @@
             font-size: 3rem;
             font-weight: 700;
             text-shadow: 0 0 15px rgba(96, 165, 250, 0.2);
+        }
+        .collapsible-content {
+            transition: max-height 0.5s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            padding-top: 0;
+        }
+        .collapsible-content.open {
+            max-height: 200px; /* Adjust as needed */
+            opacity: 1;
+            padding-top: 1rem;
         }
     </style>
 </head>
@@ -209,14 +219,20 @@
         <div class="slide-content w-full text-center">
             <h2 class="section-title text-blue-300 animated-item">Perfil Demográfico</h2>
             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Preguntas Sociodemográficas</p>
-            <div class="mt-6 flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full animated-item" style="animation-delay: 0.4s;">
-                <div class="chart-container glass-card w-full lg:w-1/2 h-96">
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-8 w-full max-w-7xl animated-item" style="animation-delay: 0.4s;">
+                <div class="chart-container glass-card h-96">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-2">Género</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="genderChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glass-card h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Edad de los Encuestados</h3>
                     <div class="chart-wrapper">
                         <canvas id="ageChart"></canvas>
                     </div>
                 </div>
-                <div class="chart-container glass-card w-full lg:w-1/2 h-96">
+                <div class="chart-container glass-card h-96">
                     <h3 class="text-lg font-semibold text-gray-200 mb-2">Nivel Educativo</h3>
                     <div class="chart-wrapper">
                         <canvas id="educationChart"></canvas>
@@ -296,22 +312,42 @@
         <div class="slide-content text-center max-w-5xl">
             <h2 class="section-title text-green-300 animated-item">Generando Valor: Consejos Prácticos</h2>
             <p class="mt-4 text-lg text-gray-400 animated-item" style="animation-delay: 0.2s;">Basado en los datos, aquí hay algunas estrategias para mejorar la gestión del tiempo.</p>
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full">
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full items-start">
                 <div class="glass-card p-6 animated-item" style="animation-delay: 0.4s;">
-                    <h3 class="text-xl font-semibold text-white">1. Estructura tu Día (Time Blocking)</h3>
-                    <p class="mt-2 text-gray-400">Asigna bloques de tiempo específicos para estudiar, ocio y descanso. Una rutina clara reduce la indecisión sobre "qué hacer".</p>
+                    <div class="flex justify-between items-center cursor-pointer" data-toggle="consejo-1">
+                        <h3 class="text-xl font-semibold text-white">1. Estructura tu Día (Time Blocking)</h3>
+                        <span class="toggle-icon text-2xl text-blue-400 font-bold">+</span>
+                    </div>
+                    <div id="consejo-1" class="collapsible-content">
+                        <p class="text-gray-400">Asigna bloques de tiempo específicos para estudiar, ocio y descanso. Una rutina clara reduce la indecisión sobre "qué hacer".</p>
+                    </div>
                 </div>
                 <div class="glass-card p-6 animated-item" style="animation-delay: 0.5s;">
-                    <h3 class="text-xl font-semibold text-white">2. Ocio Consciente y Desconectado</h3>
-                    <p class="mt-2 text-gray-400">Limita el tiempo en redes. Busca hobbies que no requieran una pantalla: deporte, lectura, arte, o voluntariado.</p>
+                     <div class="flex justify-between items-center cursor-pointer" data-toggle="consejo-2">
+                        <h3 class="text-xl font-semibold text-white">2. Ocio Consciente y Desconectado</h3>
+                        <span class="toggle-icon text-2xl text-blue-400 font-bold">+</span>
+                    </div>
+                    <div id="consejo-2" class="collapsible-content">
+                        <p class="text-gray-400">Limita el tiempo en redes. Busca hobbies que no requieran una pantalla: deporte, lectura, arte, o voluntariado.</p>
+                    </div>
                 </div>
                 <div class="glass-card p-6 animated-item" style="animation-delay: 0.6s;">
-                    <h3 class="text-xl font-semibold text-white">3. Explora Opciones Gratuitas</h3>
-                    <p class="mt-2 text-gray-400">Muchas barreras son económicas. Aprovecha los clubes de la universidad, parques públicos, cursos online gratuitos y eventos culturales de la ciudad.</p>
+                     <div class="flex justify-between items-center cursor-pointer" data-toggle="consejo-3">
+                        <h3 class="text-xl font-semibold text-white">3. Explora Opciones Gratuitas</h3>
+                        <span class="toggle-icon text-2xl text-blue-400 font-bold">+</span>
+                    </div>
+                    <div id="consejo-3" class="collapsible-content">
+                        <p class="text-gray-400">Muchas barreras son económicas. Aprovecha los clubes de la universidad, parques públicos, cursos online gratuitos y eventos culturales de la ciudad.</p>
+                    </div>
                 </div>
                 <div class="glass-card p-6 animated-item" style="animation-delay: 0.7s;">
-                    <h3 class="text-xl font-semibold text-white">4. Conecta con Otros</h3>
-                    <p class="mt-2 text-gray-400">Para el 25.5% que se siente solo, unirse a grupos de estudio o equipos deportivos puede ser la solución. Inicia tú la conversación.</p>
+                     <div class="flex justify-between items-center cursor-pointer" data-toggle="consejo-4">
+                        <h3 class="text-xl font-semibold text-white">4. Conecta con Otros</h3>
+                        <span class="toggle-icon text-2xl text-blue-400 font-bold">+</span>
+                    </div>
+                    <div id="consejo-4" class="collapsible-content">
+                        <p class="text-gray-400">Para el 25.5% que se siente solo, unirse a grupos de estudio o equipos deportivos puede ser la solución. Inicia tú la conversación.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -400,9 +436,8 @@
         Chart.register(ChartDataLabels);
 
         const chartBackgroundColor = [
-            'rgba(59, 130, 246, 0.7)', 'rgba(16, 185, 129, 0.7)',
-            'rgba(239, 68, 68, 0.7)', 'rgba(249, 115, 22, 0.7)',
-            'rgba(139, 92, 246, 0.7)', 'rgba(217, 70, 239, 0.7)'
+            'rgba(59, 130, 246, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(239, 68, 68, 0.7)',
+            'rgba(249, 115, 22, 0.7)', 'rgba(139, 92, 246, 0.7)', 'rgba(217, 70, 239, 0.7)'
         ];
         const chartBorderColor = [
             '#3B82F6', '#10B981', '#EF4444', '#F97316', '#8B5CF6', '#D946EF'
@@ -459,6 +494,22 @@
         }
 
         function createCharts() {
+            // Gráfico de Género
+            new Chart(document.getElementById('genderChart'), {
+                type: 'pie',
+                data: {
+                    labels: ['Masculino', 'Femenino', 'Otro'],
+                    datasets: [{
+                        label: 'Género',
+                        data: [41, 12, 2],
+                        backgroundColor: chartBackgroundColor,
+                        borderColor: 'rgba(13, 17, 23, 0.5)',
+                        borderWidth: 4
+                    }]
+                },
+                options: pieDoughnutOptions
+            });
+
             // Gráfico de Edad
             new Chart(document.getElementById('ageChart'), {
                 type: 'bar',
@@ -467,8 +518,8 @@
                     datasets: [{
                         label: 'Número de Personas',
                         data: [16, 30, 9],
-                        backgroundColor: chartBackgroundColor,
-                        borderColor: chartBorderColor,
+                        backgroundColor: chartBackgroundColor.slice(0,3),
+                        borderColor: chartBorderColor.slice(0,3),
                         borderWidth: 2,
                         borderRadius: 5
                     }]
@@ -484,7 +535,7 @@
                     datasets: [{
                         label: 'Nivel Educativo',
                         data: [41, 10, 4],
-                        backgroundColor: chartBackgroundColor,
+                        backgroundColor: chartBackgroundColor.slice(0,3),
                         borderColor: 'rgba(13, 17, 23, 0.5)',
                         borderWidth: 4
                     }]
@@ -576,10 +627,30 @@
             });
         }
 
+        // --- Lógica para Consejos Desplegables ---
+        function setupCollapsibles() {
+            document.querySelectorAll('[data-toggle]').forEach(header => {
+                header.addEventListener('click', () => {
+                    const contentId = header.dataset.toggle;
+                    const content = document.getElementById(contentId);
+                    const icon = header.querySelector('.toggle-icon');
+                    
+                    content.classList.toggle('open');
+                    
+                    if (content.classList.contains('open')) {
+                        icon.textContent = '−';
+                    } else {
+                        icon.textContent = '+';
+                    }
+                });
+            });
+        }
+
         // Inicializar la presentación y los gráficos
         window.onload = () => {
             showSlide(0);
             createCharts();
+            setupCollapsibles();
         };
     </script>
 </body>
