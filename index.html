@@ -18,10 +18,16 @@
             height: 100%;
             margin: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #111827;
-            color: #F9FAFB;
+            background: #0D1117;
+            color: #F0F6FC;
             overflow: hidden;
             position: relative;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
         .slide {
             position: absolute;
@@ -36,51 +42,67 @@
             padding: 2rem 4rem;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-            transform: scale(0.98);
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(30px);
+            z-index: 1;
         }
         .slide.active {
             opacity: 1;
             visibility: visible;
-            transform: scale(1);
+            transform: translateY(0);
         }
-        /* Animación para los elementos internos de la slide */
-        .slide.active .slide-content > * {
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .slide.active .animated-item {
             animation: fadeInDown 0.8s ease-in-out both;
         }
-        .slide.active .slide-content > *:nth-child(2) { animation-delay: 0.2s; }
-        .slide.active .slide-content > *:nth-child(3) { animation-delay: 0.4s; }
-        .slide.active .slide-content > *:nth-child(4) { animation-delay: 0.6s; }
+        .slide.active .animated-item:nth-child(2) { animation-delay: 0.2s; }
+        .slide.active .animated-item:nth-child(3) { animation-delay: 0.4s; }
+        .slide.active .animated-item:nth-child(4) { animation-delay: 0.6s; }
 
         @keyframes fadeInDown {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+        
+        .glass-card {
+            background: rgba(31, 41, 55, 0.35);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
         .nav-button {
             position: fixed;
             bottom: 2rem;
-            background-color: rgba(31, 41, 55, 0.8);
-            color: #F9FAFB;
+            background-color: rgba(31, 41, 55, 0.5);
+            color: #F0F6FC;
             padding: 0.75rem 1.5rem;
             border-radius: 9999px;
             cursor: pointer;
             transition: all 0.3s;
             z-index: 100;
-            border: 1px solid #4B5563;
-            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
         }
         .nav-button:hover {
             background-color: #3B82F6;
             border-color: #3B82F6;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.25);
         }
         #prevBtn { left: 2rem; }
         #nextBtn { right: 2rem; }
@@ -89,22 +111,19 @@
             bottom: 2.5rem;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(31, 41, 55, 0.8);
+            background-color: rgba(31, 41, 55, 0.5);
             color: #9CA3AF;
             padding: 0.5rem 1rem;
             border-radius: 9999px;
             font-size: 0.875rem;
             z-index: 100;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
         }
         .chart-container {
             width: 100%;
             max-width: 600px;
             margin-top: 2rem;
-            background: rgba(31, 41, 55, 0.5);
             padding: 1.5rem;
-            border-radius: 1rem;
-            border: 1px solid #374151;
             display: flex;
             flex-direction: column;
         }
@@ -113,60 +132,38 @@
             flex-grow: 1;
         }
         .tag {
-            background-color: #3B82F6;
+            background: linear-gradient(45deg, #3B82F6, #1D4ED8);
             color: white;
-            padding: 0.25rem 0.75rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 9999px;
             font-size: 0.8rem;
             font-weight: 600;
+            border: 1px solid #3B82F6;
         }
-        
-        /* Estilos para las figuras de fondo */
-        .bg-shape {
-            position: absolute;
-            opacity: 0.05;
-            z-index: -1;
-            animation: float 20s ease-in-out infinite alternate;
+        .main-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #60A5FA, #34D399, #A78BFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(96, 165, 250, 0.3);
         }
-        .bg-shape svg {
-            width: 100%;
-            height: 100%;
-            fill: #93C5FD;
-        }
-        
-        #shape1 { top: 10%; left: 5%; width: 150px; animation-duration: 22s; }
-        #shape2 { bottom: 15%; right: 10%; width: 100px; animation-duration: 18s; }
-        #shape3 { top: 20%; right: 20%; width: 80px; animation-duration: 25s; }
-        #shape4 { bottom: 5%; left: 15%; width: 120px; animation-duration: 15s; }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-30px) rotate(15deg); }
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.2);
         }
     </style>
 </head>
 <body>
-    <!-- Contenedor para las figuras de fondo generales -->
-    <div class="bg-shape" id="shape1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"></path></svg>
-    </div>
-    <div class="bg-shape" id="shape2">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.445 5.445a.999.999 0 0 0-1.39.049l-3.33 4.31-2.98-2.5A1 1 0 0 0 11 8v8a1 1 0 0 0 .725.961.997.997 0 0 0 1.04-.216l3.33-4.31 2.98 2.5A1 1 0 0 0 20 14V6a1 1 0 0 0-.555-.895zM4 18h6V6H4v12z"></path></svg>
-    </div>
-     <div class="bg-shape" id="shape3">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 0-5 5v2a5 5 0 0 0 5 5 5 5 0 0 0 5-5V7a5 5 0 0 0-5-5zm0 8a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3 3 3 0 0 1 3 3v2a3 3 0 0 1-3 3zm6 2h-2v2a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3v-2H6a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-4a3 3 0 0 0-3-3z"></path></svg>
-    </div>
-    <div class="bg-shape" id="shape4">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.707 12.707a1 1 0 0 0-1.414-1.414L13 18.586V3a1 1 0 0 0-2 0v15.586l-7.293-7.293a1 1 0 0 0-1.414 1.414l9 9a1 1 0 0 0 1.414 0l9-9z"></path></svg>
-    </div>
-
+    <div id="particles-js"></div>
 
     <!-- Slide 1: Título -->
     <div id="slide-1" class="slide active">
-        <div class="text-center slide-content">
-            <h1 class="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">Gestión del Tiempo en Jóvenes</h1>
-            <p class="mt-4 text-xl md:text-2xl text-gray-300">Un Análisis de Data Experience</p>
-            <div class="mt-12 border-t border-gray-700 pt-6">
+        <div class="slide-content text-center">
+            <h1 class="main-title animated-item">Gestión del Tiempo en Jóvenes</h1>
+            <p class="mt-4 text-xl md:text-2xl text-gray-300 animated-item">Un Análisis de Data Experience</p>
+            <div class="mt-12 pt-6 animated-item">
                 <p class="text-lg text-gray-400">Grupo 856</p>
                 <p class="mt-2 text-md text-gray-500">Nicolas Cuervo, Jacobo Ramirez, Daniel Paez, Gael Serrano</p>
             </div>
@@ -175,29 +172,31 @@
 
     <!-- Slide 2: Problemática -->
     <div id="slide-2" class="slide">
-        <div class="text-center max-w-4xl slide-content">
-            <h2 class="text-4xl md:text-5xl font-bold text-blue-300">La Problemática</h2>
-            <p class="mt-6 text-lg md:text-xl text-gray-300 leading-relaxed bg-gray-800/50 p-6 rounded-xl border border-gray-700">
-                Los adolescentes y jóvenes universitarios destinan gran parte de su tiempo libre a actividades de ocio que, aunque entretenidas,
-                <span class="text-white font-semibold">no siempre fomentan habilidades cruciales</span> para su desarrollo académico o personal.
-            </p>
-            <p class="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed">
-                Esta situación puede limitar su crecimiento, afectar su bienestar emocional y su equilibrio general.
-            </p>
+        <div class="slide-content text-center max-w-4xl">
+            <h2 class="section-title text-blue-300 animated-item">La Problemática</h2>
+            <div class="mt-6 p-8 glass-card animated-item">
+                <p class="text-lg md:text-xl text-gray-200 leading-relaxed">
+                    Los adolescentes y jóvenes universitarios destinan gran parte de su tiempo libre a actividades de ocio que, aunque entretenidas,
+                    <span class="text-white font-semibold bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-orange-400">no siempre fomentan habilidades cruciales</span> para su desarrollo académico o personal.
+                </p>
+                <p class="mt-4 text-lg md:text-xl text-gray-300 leading-relaxed">
+                    Esta situación puede limitar su crecimiento, afectar su bienestar emocional y su equilibrio general.
+                </p>
+            </div>
         </div>
     </div>
 
     <!-- Slide 3: Metodología -->
     <div id="slide-3" class="slide">
-        <div class="text-center max-w-4xl slide-content">
-            <h2 class="text-4xl md:text-5xl font-bold text-teal-300">Metodología</h2>
-            <p class="mt-6 text-lg md:text-xl text-gray-300">Realizamos una encuesta a <span class="font-bold text-white">55 personas</span> para recolectar datos sobre sus hábitos.</p>
-            <div class="mt-8 flex flex-col md:flex-row gap-8 justify-center">
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1 hover:border-teal-400 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10">
+        <div class="slide-content text-center max-w-4xl">
+            <h2 class="section-title text-teal-300 animated-item">Metodología</h2>
+            <p class="mt-6 text-lg md:text-xl text-gray-300 animated-item">Realizamos una encuesta a <span class="font-bold text-white">55 personas</span> para recolectar datos sobre sus hábitos.</p>
+            <div class="mt-8 flex flex-col md:flex-row gap-8 justify-center w-full">
+                <div class="glass-card p-6 flex-1 animated-item" style="animation-delay: 0.4s;">
                     <h3 class="text-xl font-semibold text-white">Fase 1: Digital</h3>
                     <p class="mt-2 text-gray-400">Compartimos un enlace a la encuesta a través de Instagram para alcanzar a nuestros conocidos y sus redes.</p>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 flex-1 hover:border-teal-400 transition-all duration-300 hover:shadow-lg hover:shadow-teal-500/10">
+                <div class="glass-card p-6 flex-1 animated-item" style="animation-delay: 0.6s;">
                     <h3 class="text-xl font-semibold text-white">Fase 2: En Campo</h3>
                     <p class="mt-2 text-gray-400">Abordamos a estudiantes en la universidad, facilitando nuestros dispositivos para que completaran la encuesta en el momento.</p>
                 </div>
@@ -207,18 +206,18 @@
 
     <!-- Slide 4: Perfil Demográfico -->
     <div id="slide-4" class="slide">
-        <div class="w-full text-center slide-content">
-            <h2 class="text-4xl font-bold text-blue-300">Perfil Demográfico</h2>
-            <p class="inline-block mt-2 tag">Preguntas Sociodemográficas</p>
-            <div class="mt-6 flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full">
-                <div class="chart-container w-full lg:w-1/2 h-96">
-                    <h3 class="text-lg font-semibold text-gray-300 mb-2">Edad de los Encuestados</h3>
+        <div class="slide-content w-full text-center">
+            <h2 class="section-title text-blue-300 animated-item">Perfil Demográfico</h2>
+            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Preguntas Sociodemográficas</p>
+            <div class="mt-6 flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full animated-item" style="animation-delay: 0.4s;">
+                <div class="chart-container glass-card w-full lg:w-1/2 h-96">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-2">Edad de los Encuestados</h3>
                     <div class="chart-wrapper">
                         <canvas id="ageChart"></canvas>
                     </div>
                 </div>
-                <div class="chart-container w-full lg:w-1/2 h-96">
-                    <h3 class="text-lg font-semibold text-gray-300 mb-2">Nivel Educativo</h3>
+                <div class="chart-container glass-card w-full lg:w-1/2 h-96">
+                    <h3 class="text-lg font-semibold text-gray-200 mb-2">Nivel Educativo</h3>
                     <div class="chart-wrapper">
                         <canvas id="educationChart"></canvas>
                     </div>
@@ -229,10 +228,10 @@
 
     <!-- Slide 5: Pregunta 1 -->
     <div id="slide-5" class="slide">
-        <div class="w-full text-center max-w-4xl slide-content">
-            <h2 class="text-3xl font-bold text-teal-300">Horas de estudio fuera del aula</h2>
-             <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
-            <div class="chart-container mx-auto">
+        <div class="slide-content w-full text-center max-w-4xl">
+            <h2 class="section-title text-teal-300 animated-item">Horas de estudio fuera del aula</h2>
+             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+            <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q1Chart"></canvas>
                 </div>
@@ -242,10 +241,10 @@
 
     <!-- Slide 6: Pregunta 2 -->
     <div id="slide-6" class="slide">
-        <div class="w-full text-center max-w-4xl slide-content">
-            <h2 class="text-3xl font-bold text-teal-300">Uso diario de redes sociales y streaming</h2>
-             <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
-            <div class="chart-container mx-auto">
+        <div class="slide-content w-full text-center max-w-4xl">
+            <h2 class="section-title text-teal-300 animated-item">Uso diario de redes sociales y streaming</h2>
+             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+            <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q2Chart"></canvas>
                 </div>
@@ -255,10 +254,10 @@
 
     <!-- Slide 7: Pregunta 3 -->
     <div id="slide-7" class="slide">
-        <div class="w-full text-center max-w-4xl slide-content">
-            <h2 class="text-3xl font-bold text-teal-300">Tiempo semanal de actividad física</h2>
-             <p class="inline-block mt-2 tag">Pregunta Descriptiva</p>
-            <div class="chart-container mx-auto">
+        <div class="slide-content w-full text-center max-w-4xl">
+            <h2 class="section-title text-teal-300 animated-item">Tiempo semanal de actividad física</h2>
+             <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Descriptiva</p>
+            <div class="chart-container glass-card mx-auto animated-item" style="animation-delay: 0.4s;">
                  <div class="chart-wrapper" style="height: 400px">
                     <canvas id="q3Chart"></canvas>
                 </div>
@@ -268,10 +267,10 @@
     
     <!-- Slide 8: Pregunta 4 -->
     <div id="slide-8" class="slide">
-        <div class="w-full text-center max-w-4xl slide-content">
-            <h2 class="text-3xl font-bold text-blue-300">¿Qué te impide aprovechar tu tiempo libre?</h2>
-            <p class="inline-block mt-2 tag">Pregunta Diagnóstica</p>
-            <div class="chart-container mx-auto h-96">
+        <div class="slide-content w-full text-center max-w-4xl">
+            <h2 class="section-title text-blue-300 animated-item">¿Qué te impide aprovechar tu tiempo libre?</h2>
+            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Diagnóstica</p>
+            <div class="chart-container glass-card mx-auto h-96 animated-item" style="animation-delay: 0.4s;">
                 <div class="chart-wrapper">
                     <canvas id="q4Chart"></canvas>
                 </div>
@@ -281,10 +280,10 @@
 
     <!-- Slide 9: Pregunta 5 -->
     <div id="slide-9" class="slide">
-        <div class="w-full text-center max-w-4xl slide-content">
-            <h2 class="text-3xl font-bold text-blue-300">¿Cómo describes tu experiencia con el tiempo libre?</h2>
-            <p class="inline-block mt-2 tag">Pregunta Diagnóstica</p>
-            <div class="chart-container mx-auto h-96">
+        <div class="slide-content w-full text-center max-w-4xl">
+            <h2 class="section-title text-blue-300 animated-item">¿Cómo describes tu experiencia con el tiempo libre?</h2>
+            <p class="inline-block mt-2 tag animated-item" style="animation-delay: 0.2s;">Pregunta Diagnóstica</p>
+            <div class="chart-container glass-card mx-auto h-96 animated-item" style="animation-delay: 0.4s;">
                 <div class="chart-wrapper">
                     <canvas id="q5Chart"></canvas>
                 </div>
@@ -294,23 +293,23 @@
 
     <!-- Slide 10: Consejos -->
     <div id="slide-10" class="slide">
-        <div class="text-center max-w-4xl slide-content">
-            <h2 class="text-4xl md:text-5xl font-bold text-green-300">Generando Valor: Consejos Prácticos</h2>
-            <p class="mt-4 text-lg text-gray-400">Basado en los datos, aquí hay algunas estrategias para mejorar la gestión del tiempo.</p>
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-green-400 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+        <div class="slide-content text-center max-w-5xl">
+            <h2 class="section-title text-green-300 animated-item">Generando Valor: Consejos Prácticos</h2>
+            <p class="mt-4 text-lg text-gray-400 animated-item" style="animation-delay: 0.2s;">Basado en los datos, aquí hay algunas estrategias para mejorar la gestión del tiempo.</p>
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full">
+                <div class="glass-card p-6 animated-item" style="animation-delay: 0.4s;">
                     <h3 class="text-xl font-semibold text-white">1. Estructura tu Día (Time Blocking)</h3>
                     <p class="mt-2 text-gray-400">Asigna bloques de tiempo específicos para estudiar, ocio y descanso. Una rutina clara reduce la indecisión sobre "qué hacer".</p>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-green-400 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+                <div class="glass-card p-6 animated-item" style="animation-delay: 0.5s;">
                     <h3 class="text-xl font-semibold text-white">2. Ocio Consciente y Desconectado</h3>
                     <p class="mt-2 text-gray-400">Limita el tiempo en redes. Busca hobbies que no requieran una pantalla: deporte, lectura, arte, o voluntariado.</p>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-green-400 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+                <div class="glass-card p-6 animated-item" style="animation-delay: 0.6s;">
                     <h3 class="text-xl font-semibold text-white">3. Explora Opciones Gratuitas</h3>
                     <p class="mt-2 text-gray-400">Muchas barreras son económicas. Aprovecha los clubes de la universidad, parques públicos, cursos online gratuitos y eventos culturales de la ciudad.</p>
                 </div>
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 hover:border-green-400 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+                <div class="glass-card p-6 animated-item" style="animation-delay: 0.7s;">
                     <h3 class="text-xl font-semibold text-white">4. Conecta con Otros</h3>
                     <p class="mt-2 text-gray-400">Para el 25.5% que se siente solo, unirse a grupos de estudio o equipos deportivos puede ser la solución. Inicia tú la conversación.</p>
                 </div>
@@ -320,17 +319,19 @@
 
      <!-- Slide 11: Gracias -->
     <div id="slide-11" class="slide">
-        <div class="text-center slide-content">
-            <h1 class="text-6xl font-bold text-white">Gracias</h1>
-            <p class="mt-4 text-xl text-gray-400">Grupo 856</p>
+        <div class="slide-content text-center">
+            <h1 class="main-title animated-item">Gracias</h1>
+            <p class="mt-4 text-xl text-gray-400 animated-item" style="animation-delay: 0.2s;">Grupo 856</p>
         </div>
     </div>
-
 
     <!-- Navegación -->
     <button id="prevBtn" class="nav-button">Anterior</button>
     <button id="nextBtn" class="nav-button">Siguiente</button>
     <div id="slideCounter"></div>
+
+    <!-- Script para el fondo de partículas -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <script>
         // --- Lógica de la Presentación ---
@@ -375,6 +376,26 @@
             }
         });
 
+        // --- Configuración del fondo de partículas ---
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#4A5568" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#4A5568", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
+
+
         // --- Datos y Configuración de Gráficos ---
         Chart.register(ChartDataLabels);
 
@@ -400,17 +421,18 @@
                 legend: { display: false },
                 datalabels: {
                     formatter: percentageFormatter,
-                    color: '#F9FAFB',
+                    color: '#F0F6FC',
                     anchor: 'end',
                     align: 'top',
-                    font: { weight: 'bold' }
+                    font: { weight: 'bold', size: 14 },
+                    textShadow: { color: 'rgba(0,0,0,0.7)', blur: 5, offsetX: 1, offsetY: 1 }
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
                     ticks: { color: '#9CA3AF' },
-                    grid: { color: '#374151' }
+                    grid: { color: 'rgba(74, 85, 104, 0.4)' }
                 },
                 x: {
                     ticks: { color: '#9CA3AF' },
@@ -430,7 +452,7 @@
                 datalabels: {
                     formatter: percentageFormatter,
                     color: '#FFF',
-                    textShadow: '0 0 3px #000',
+                    textShadow: { color: 'rgba(0,0,0,0.7)', blur: 5, offsetX: 1, offsetY: 1 },
                     font: { weight: 'bold', size: 14 }
                 }
             },
@@ -463,7 +485,7 @@
                         label: 'Nivel Educativo',
                         data: [41, 10, 4],
                         backgroundColor: chartBackgroundColor,
-                        borderColor: '#1F2937',
+                        borderColor: 'rgba(13, 17, 23, 0.5)',
                         borderWidth: 4
                     }]
                 },
@@ -530,7 +552,7 @@
                         label: 'Factores',
                         data: [13, 10, 14, 7, 11],
                         backgroundColor: chartBackgroundColor,
-                        borderColor: '#1F2937',
+                        borderColor: 'rgba(13, 17, 23, 0.5)',
                         borderWidth: 4
                     }]
                 },
@@ -546,7 +568,7 @@
                         label: 'Experiencia',
                         data: [10, 16, 11, 4, 14],
                         backgroundColor: chartBackgroundColor,
-                        borderColor: '#1F2937',
+                        borderColor: 'rgba(13, 17, 23, 0.5)',
                         borderWidth: 4
                     }]
                 },
